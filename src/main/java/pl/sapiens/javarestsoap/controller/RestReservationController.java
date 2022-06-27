@@ -40,23 +40,35 @@ public class RestReservationController {
         return Response.ok(reservations).build();
     }
 
+    // old using
+//    @GET
+//    @Path("/{id}")
+//    public Response findReservationById(@PathParam("id") Long reservationId) {
+//        log.info("Trying to find reservation by id: [{}]", reservationId);
+//        Response result;
+//        try {
+//            Reservation found = businessLogic.getReservationById(reservationId);
+//            result = Response.ok(found).build();
+//
+//        } catch (NoReservationFoundException e) {
+//            result = Response.status(NOT_FOUND).build();
+//        }
+//        return result;
+//    }
+
     @GET
     @Path("/{id}")
     public Response findReservationById(@PathParam("id") Long reservationId) {
         log.info("Trying to find reservation by id: [{}]", reservationId);
         Response result;
-        try {
-            Reservation found = businessLogic.getReservationById(reservationId);
-            result = Response.ok(found).build();
 
-        } catch (NoReservationFoundException e) {
-            result = Response.status(NOT_FOUND).build();
-        }
+        Reservation found = businessLogic.getReservationByIdBetter(reservationId);
+        result = Response.ok(found).build();
         return result;
     }
 
     @POST
-    public Response createReservation( Reservation toCreate) {
+    public Response createReservation(Reservation toCreate) {
         log.info("Trying to create reservation: [{}]:", toCreate);
         //TODO: use service, add validation
         URI location = null;
@@ -65,7 +77,7 @@ public class RestReservationController {
         } catch (URISyntaxException e) {
             log.error("Cannot create location header");
         }
-        return  Response.created(location).build();
+        return Response.created(location).build();
 
     }
 
