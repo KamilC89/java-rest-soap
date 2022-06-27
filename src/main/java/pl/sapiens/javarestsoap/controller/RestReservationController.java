@@ -2,6 +2,7 @@ package pl.sapiens.javarestsoap.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import pl.sapiens.javarestsoap.entity.Reservation;
+import pl.sapiens.javarestsoap.service.ReservationsService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -27,6 +28,9 @@ public class RestReservationController {
             LocalDateTime.now().plusHours(2),
             "Main center",
             "Near window!!!");
+
+
+    private final ReservationsService businessLogic = new ReservationsService();
 
     @GET
     public Response getReservation() {
